@@ -56,8 +56,7 @@ bool systemVersionIsAtLeast(SInt32 major, SInt32 minor)
 - (void)run
 {	
 	NSArray *watchedURLs = [NSArray arrayWithObject:
-							[NSURL URLWithString:[NSHomeDirectory()
-							 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+							[NSURL URLWithString:@"/Users/mikefluff/BACKUP"]];
 	NSArray *excludeURLs = [NSMutableArray arrayWithObject:
 							[NSURL URLWithString:[[NSHomeDirectory() stringByAppendingPathComponent:@"Downloads"]
 									stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
@@ -74,14 +73,20 @@ bool systemVersionIsAtLeast(SInt32 major, SInt32 minor)
 
 #if CD_EVENTS_TEST_APP_USE_BLOCKS_API
 	_events = [[CDEvents alloc] initWithURLs:watchedURLs
-									   block:^(CDEvents *watcher, CDEvent *event){ NSLog(@"[Block] URLWatcher: %@\nEvent: %@", watcher, event); }
+									   block:^(CDEvents *watcher, CDEvent *event){
+                                           //NSLog(@"[Block] URLWatcher: %@\nEvent: %@", watcher, event);
+                                           if([event isCreated]) {
+                                               NSArray *test = [[event URL] pathComponents];
+                                               NSLog(@"%@",[event URL]);
+                                           }
+                                       }
 								   onRunLoop:[NSRunLoop currentRunLoop]
 						sinceEventIdentifier:kCDEventsSinceEventNow
 						notificationLantency:CD_EVENTS_DEFAULT_NOTIFICATION_LATENCY
 					 ignoreEventsFromSubDirs:CD_EVENTS_DEFAULT_IGNORE_EVENT_FROM_SUB_DIRS
 								 excludeURLs:excludeURLs
 						 streamCreationFlags:creationFlags];
-#else
+#else;
 	_events = [[CDEvents alloc] initWithURLs:watchedURLs
 									delegate:self
 								   onRunLoop:[NSRunLoop currentRunLoop]
