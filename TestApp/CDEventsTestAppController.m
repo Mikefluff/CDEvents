@@ -75,8 +75,8 @@ bool systemVersionIsAtLeast(SInt32 major, SInt32 minor)
 	_events = [[CDEvents alloc] initWithURLs:watchedURLs
 									   block:^(CDEvents *watcher, CDEvent *event){
                                            //NSLog(@"[Block] URLWatcher: %@\nEvent: %@", watcher, event);
-                                           if([event isRenamed])
-                                               NSLog(@"%@",event);
+                                           //if([event isRenamed])
+                                               NSLog(@"%@",[event URL]);
                                          
                                        }
 								   onRunLoop:[NSRunLoop currentRunLoop]
