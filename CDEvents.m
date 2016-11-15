@@ -306,7 +306,8 @@ streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags
 	for (NSURL *URL in [self watchedURLs]) {
 		[watchedPaths addObject:[URL path]];
 	}
-	
+    
+    @try {
 	_eventStream = FSEventStreamCreate(kCFAllocatorDefault,
 									   &CDEventsCallback,
 									   &callbackCtx,
@@ -314,6 +315,13 @@ streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags
 									   (FSEventStreamEventId)[self sinceEventIdentifier],
 									   [self notificationLatency],
 									   (uint) _eventStreamCreationFlags);
+    }
+    @catch (NSException * e) {
+        NSLog(@"Exception: %@", e);
+    }
+    @finally {
+        
+    }
 }
 
 - (void)disposeEventStream
