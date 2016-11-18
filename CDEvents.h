@@ -70,7 +70,7 @@ extern NSString *const CDEventsEventStreamCreationFailureException;
  *
  * @since 1.0.0
  */
-#define CD_EVENTS_DEFAULT_NOTIFICATION_LATENCY			((NSTimeInterval)3.0)
+#define CD_EVENTS_DEFAULT_NOTIFICATION_LATENCY			((NSTimeInterval)1.0)
 
 /**
  * The default value whether events from sub directories should be ignored or not.
